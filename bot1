@@ -1,0 +1,35 @@
+import discord
+from discord.ext import commands
+import asyncio
+
+# Bot setup
+intents = discord.Intents.default()
+intents.message_content = True
+intents.members = True  # Needed for moderation commands
+
+bot = commands.Bot(command_prefix='!', intents=intents, help_command=None)  # Custom prefix, e.g., '!'
+
+# Event: Bot ready
+@bot.event
+async def on_ready():
+    print(f'Logged in as {bot.user} (ID: {bot.user.id})')
+    print('------')
+    await bot.change_presence(activity=discord.Game(name="Hades Studios RP"))
+
+# Command: Help - Lists all commands
+@bot.command(name='help')
+async def help_command(ctx):
+    embed = discord.Embed(title="Hades Studios Bot Commands", description="Essential commands for the British Roblox Roleplay Server.", color=0x00ff00)
+    embed.add_field(name="-announce <message>", value="Send a server-wide announcement.", inline=False)
+    embed.add_field(name="-startup <message>", value="Announce a server startup with optional details.", inline=False)
+    embed.add_field(name="-shutdown <message>", value="Announce a server shutdown with optional details.", inline=False)
+    embed.add_field(name="-mute <user> <duration> <reason>", value="Mute a user (e.g., !mute @user 10m Spamming). Duration: s/m/h/d.", inline=False)
+    embed.add_field(name="-unmute <user>", value="Unmute a user.", inline=False)
+    embed.add_field(name="-kick <user> <reason>", value="Kick a user from the server.", inline=False)
+    embed.add_field(name="-ban <user> <reason>", value="Ban a user from the server.", inline=False)
+    embed.add_field(name="-unban <user_id>", value="Unban a user by their ID.", inline=False)
+    embed.add_field(name="-ping", value="Check the bot's latency.", inline=False)
+    embed.set_footer(text="Hades Studios - British Roblox RP")
+    await ctx.send(embed=embed)
+
+bot.run(MTQyOTQxNDYyMjY0NTE5NDc1Mg.GBpCWI.sV6H4FPvhrMEpcwFf74eMt1rNUOY_t6yW6iyjk)
